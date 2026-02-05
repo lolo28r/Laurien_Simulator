@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laurien Simulator</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div id="dialogue-overlay" class="dialogue-overlay"></div>
+
+    <div id="intro-screen">
+        <div class="glass-card intro-content">
+            <h1>LAURIEN SIMULATOR</h1>
+            <p class="story-text">Bienvenue dans Laurien Simulator, prêt à faire du Laurien ?</p>
+            <div class="input-group">
+                <label for="player-name-input">Entre ton pseudo ici</label>
+                <input type="text" id="player-name-input" placeholder="Pseudo..." maxlength="15">
+                <label style="margin-top: 15px; display: block;">Ton identité :</label>
+                <select id="player-gender">
+                    <option value="Garçon">Garçon</option>
+                    <option value="Fille">Fille</option>
+                    <option value="Non-binaire">Non-binaire</option>
+                    <option value="Trans">Trans</option>
+                    <option value="Genderfluid">Genderfluid</option>
+                </select>
+            </div>
+            <button id="start-btn">COMMENCER L'AVENTURE</button>
+        </div>
+    </div>
+
+    <div class="game-wrapper">
+        <aside class="sidebar left">
+            <div class="glass-card">
+                <h3>Stats</h3>
+                <p>LP : <span id="lp-count">0</span></p>
+                <p>Total : <span id="lp-total">0</span></p>
+                <p>Prod/sec: <span id="lp-ps">0</span></p>
+
+                <button id="save-btn" class="save-button">💾 Sauvegarder</button>
+                <button id="reset-btn" class="reset-button">🗑️ Reset la partie</button>
+            </div>
+        </aside>
+
+
+        <main class="main-clicker">
+            <div id="dialogue-box" class="glass-card">
+                <span id="laurien-talks">...</span>
+            </div>
+            <div id="score-container">
+                <p class="currency-name">Laurien Points</p>
+            </div>
+            <div class="laurien-container">
+                <button id="laurien-btn">👤</button>
+            </div>
+        </main>
+
+        <aside class="sidebar right">
+            <div class="glass-card shop-card">
+                <h3>Boutique</h3>
+                <div id="shop-container">
+                    <p class="empty-msg">Accumule des points pour recruter tes potes.</p>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <script type="module" src="main.js"></script>
+</body>
+
+</html>

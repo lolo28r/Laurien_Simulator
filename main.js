@@ -6,6 +6,9 @@ let eventTriggered = false;
 
 function init() {
     // 1. On active les clics pour les dialogues IMMÉDIATEMENT
+    if (window.innerWidth <= 850) {
+        UI.switchTab('main');
+    }
     UI.initGlobalListeners();
 
     const saved = localStorage.getItem('laurien_save');

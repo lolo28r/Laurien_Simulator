@@ -96,6 +96,26 @@ export const UI = {
             onComplete(name, gender);
         });
     },
+    switchTab(tabName) {
+        // 1. Gérer l'affichage des sections
+        const sections = {
+            'left': document.querySelector('.sidebar.left'),
+            'main': document.querySelector('.main-clicker'),
+            'right': document.querySelector('.sidebar.right')
+        };
+
+        Object.values(sections).forEach(el => el.classList.remove('mobile-active'));
+        sections[tabName].classList.add('mobile-active');
+
+        // 2. Gérer l'état des boutons de la nav
+        const buttons = document.querySelectorAll('.mobile-nav button');
+        buttons.forEach(btn => btn.classList.remove('active'));
+
+        // On trouve le bouton cliqué (index 0=stats, 1=jeu, 2=shop)
+        if (tabName === 'left') buttons[0].classList.add('active');
+        if (tabName === 'main') buttons[1].classList.add('active');
+        if (tabName === 'right') buttons[2].classList.add('active');
+    },
 
     renderShop(upgrades, currentLp, totalLp, onBuy) {
         const container = document.getElementById('shop-container');
@@ -122,4 +142,5 @@ export const UI = {
             container.appendChild(item);
         });
     }
+
 };

@@ -387,68 +387,76 @@ select option {
     color: white;
 }
 
-/* --- RESPONSIVE DESIGN --- */
-
-/* Pour les tablettes et petits écrans PC */
-@media (max-width: 1100px) {
+@media (max-width: 850px) {
     .game-wrapper {
-        grid-template-columns: 250px 1fr 280px;
-        gap: 10px;
+        display: block;
+        /* On casse la grille */
+        position: relative;
+        height: 100vh;
         padding: 10px;
     }
-}
 
-/* Pour les Mobiles (Le vrai défi) */
-@media (max-width: 850px) {
-    body {
-        overflow-y: auto;
-        /* On autorise le scroll sur mobile */
-    }
-
-    .game-wrapper {
-        display: flex;
-        flex-direction: column;
-        /* On empile tout verticalement */
-        height: auto;
-        gap: 20px;
-    }
-
-    .sidebar {
-        width: 100%;
-        height: auto;
-    }
-
-    .sidebar.left {
-        order: 2;
-        /* Les stats passent après le clicker */
-    }
-
+    /* On cache les sidebars par défaut sur mobile */
+    .sidebar,
     .main-clicker {
-        order: 1;
-        /* Le clicker reste en haut */
-        min-height: 400px;
+        display: none;
+        height: calc(100vh - 80px);
+        /* Laisse de la place pour la nav */
+        width: 100%;
     }
 
-    .sidebar.right {
-        order: 3;
-        /* La boutique en bas */
+    /* La classe qui affiche l'onglet actif */
+    .mobile-active {
+        display: flex !important;
+        flex-direction: column;
     }
 
-    /* On réduit un peu la taille des textes */
+    .mobile-nav {
+        display: flex;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 70px;
+        background: rgba(15, 12, 41, 0.95);
+        backdrop-filter: blur(10px);
+        border-top: 2px solid var(--primary);
+        z-index: 100;
+    }
+
+    .mobile-nav button {
+        flex: 1;
+        background: none;
+        border: none;
+        color: white;
+        font-family: 'Poppins', sans-serif;
+        font-weight: bold;
+        opacity: 0.6;
+    }
+
+    .mobile-nav button.active {
+        opacity: 1;
+        color: var(--gold);
+        border-bottom: 3px solid var(--gold);
+    }
+
+    /* Ajustements de taille pour que ça rentre */
     #lp-count {
-        font-size: 3.5rem;
+        font-size: 3rem;
     }
 
     #laurien-btn {
-        font-size: 120px;
+        font-size: 100px;
     }
 
-    #dialogue-box {
-        position: fixed;
-        /* Le dialogue doit flotter au-dessus de tout */
-        top: 10px;
-        left: 5%;
-        width: 90%;
-        max-width: none;
+    .glass-card {
+        height: 100%;
+    }
+}
+
+/* Cache la nav sur PC */
+@media (min-width: 851px) {
+    .mobile-nav {
+        display: none;
     }
 }

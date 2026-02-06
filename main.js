@@ -64,7 +64,8 @@ function checkEvents() {
         gameData.lp += 6000;
         gameData.totalLp += 6000;
         UI.queueDialogues([
-            "Allez régale toi."
+            `Bon je rigole, tiens achète moi une binouze la`,
+            `Je te vais te donner un petit coup de pouce.`
 
         ]);
         updateAll();
@@ -133,7 +134,7 @@ function refreshShop() {
 function checkStory() {
     const currentStory = [...gameData.story]
         .reverse()
-        .find(s => gameData.totalLp >= s.threshold);
+        .find(s => gameData.lp >= s.threshold);
 
     if (currentStory && currentStory.threshold > lastThreshold) {
         lastThreshold = currentStory.threshold;

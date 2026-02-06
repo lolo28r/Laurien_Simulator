@@ -53,7 +53,7 @@ export const UI = {
             document.getElementById('la-talks-container'); // Petit reset visuel si besoin
         }
 
-        document.getElementById('laurien-talks').innerText = "À toi de jouer !";
+
     },
 
     typeWriter(text, i = 0) {

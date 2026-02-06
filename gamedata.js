@@ -51,17 +51,10 @@ export const gameData = {
         {
             threshold: 200,
             text: (n) => [
-                `Bon je rigole, tiens achète moi une binouze la`,
-                `Je te vais te donner un petit coup de pouce.`
+                `Allez régale toi`
             ]
         },
-        {
-            threshold: 6000,
-            text: (n) => [
-                `Oh, tu as découvert la "Binouze" !`,
-                `Enfin un investissement sérieux.`
-            ]
-        }
+
     ],
 
     upgrades: [

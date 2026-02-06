@@ -64,9 +64,8 @@ function checkEvents() {
         gameData.lp += 6000;
         gameData.totalLp += 6000;
         UI.queueDialogues([
-            "Bon allez, ça me fait de la peine de te voir galérer avec tes sondages...",
-            "T'as l'air tellement désespéré que je t'offre 6000 points.",
-            "VA T'ACHETER UNE BINOUZE ET ME REGARDE PAS COMME ÇA !"
+            "Allez régale toi."
+
         ]);
         updateAll();
     }

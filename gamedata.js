@@ -10,7 +10,8 @@ export const gameData = {
             text: (n, g) => [
                 `Bienvenue dans le simulateur de Laurien, ${n}.`,
                 `${g} !!  On baise ?`,
-                `Dans ce jeu tu va devoir gagner des Laurien Points en achetant des améliorations et en cliquant !! Mais go faire ca en fait !`
+                `Dans ce jeu tu va devoir gagner des Laurien Points en achetant des améliorations et en cliquant !! Mais go faire ca en fait !`,
+                `Va-y ${n}, clique sur la silhouette pour faire des Laurien Points.`,
             ]
         },
         {
@@ -24,32 +25,34 @@ export const gameData = {
         {
             threshold: 20,
             text: (n) => [
-                `Bon, parce que j'ai pitié, je t'ai débloqué les "Sondages Rémunérés".`,
+                `Bonne nouvelle, tu viens de débloquer les "Sondages Rémunérés".`,
                 `J'en ai fait plein durant ma jeunesse, tu va voir c'est très formateur, et ça te rapporte 0.2 Laurien Points par secondes.`,
-                `allez plus que 6 000 avant la binouze !!.`
+                `Tu peux acheter l'amélioration dans le Shop.`,
+                `Allez plus que 6 000 avant la binouze !!.`
             ]
         },
         // NOUVEAUX DIALOGUES POUR NE PAS ABANDONNER
         {
-            threshold: 500,
+            threshold: 100,
             text: (n) => [
-                `T'es encore là ? T'as l'air déterminé.`,
-                `500 LP... C'est presque rien, mais c'est un début.`,
-                `Continue à cliquer, la bière n'attend pas.`
+                `T'es encore là ?.`,
+                `Merci de jouer à mon jeu, c'est vraiment cool.`,
+                `Bah continue hein.`,
+                `Tu peux aussi améliorer tes Business dans le Shop pour faire plus de Laurien Points par secondes.`
             ]
         },
         {
-            threshold: 2000,
+            threshold: 150,
             text: (n) => [
-                `2000 ! On est au tiers du chemin.`,
-                `Tes doigts tiennent le coup ? On dirait que t'as fait ça toute ta vie.`
+                `T'a vu c'est rentable les sondages.`,
+
             ]
         },
         {
-            threshold: 4500,
+            threshold: 200,
             text: (n) => [
-                `Presque 6000 ! Je commence à sentir l'odeur du houblon d'ici.`,
-                `Lâche rien, t'y es presque.`
+                `Bon je rigole, tiens achète moi une binouze la`,
+                `Je te vais te donner un petit coup de pouce.`
             ]
         },
         {

@@ -1,4 +1,4 @@
-import { gameData } from './gameData.js';
+import { gameData } from './gamedata.js';
 import { UI } from './ui.js';
 
 let lastThreshold = -1;

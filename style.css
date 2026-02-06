@@ -18,18 +18,21 @@ body {
     color: var(--text);
     height: 100vh;
     overflow: hidden;
-    /* Empêche le scroll global */
 }
 
+/* --- STRUCTURE PC --- */
 .game-wrapper {
     display: grid;
-    /* On force les deux côtés à être identiques pour que le milieu soit parfait */
     grid-template-columns: 350px 1fr 350px;
     height: 100vh;
     gap: 20px;
     padding: 20px;
-    box-sizing: border-box;
-    align-items: stretch;
+}
+
+.sidebar,
+.main-clicker {
+    display: flex !important;
+    flex-direction: column;
 }
 
 .glass-card {
@@ -37,123 +40,31 @@ body {
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 20px;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-}
-
-/* Sidebars */
-.sidebar {
+    padding: 25px;
     height: 100%;
 }
 
-/* --- BOUTIQUE (RIGHT SIDEBAR) --- */
-#shop-container {
-    flex-grow: 1;
-    overflow-y: auto;
-    padding-right: 8px;
-    margin-top: 15px;
-}
-
-/* Custom Scrollbar pour la boutique */
-#shop-container::-webkit-scrollbar {
-    width: 6px;
-}
-
-#shop-container::-webkit-scrollbar-thumb {
-    background: var(--primary);
-    border-radius: 10px;
-}
-
-.shop-item {
-    width: 100%;
+/* --- STATS & SCORE --- */
+.stat-line {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+    padding: 12px;
     background: rgba(255, 255, 255, 0.05);
-    border: 2px solid rgba(255, 255, 255, 0.1);
-    border-radius: 15px;
-    padding: 15px;
-    margin-bottom: 12px;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    position: relative;
-}
-
-.upgrade-sprite {
-    font-size: 2.2rem;
-    background: rgba(0, 0, 0, 0.3);
-    width: 60px;
-    height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 12px;
-}
-
-.shop-info {
-    flex-grow: 1;
-    text-align: left;
-}
-
-.shop-info strong {
-    display: block;
-    font-size: 1.05rem;
-    margin-bottom: 2px;
-}
-
-.shop-info small {
-    color: #aaa;
-    font-size: 0.75rem;
-}
-
-.shop-cost {
-    font-weight: 900;
-    color: var(--gold);
-    font-size: 0.9rem;
-    background: rgba(0, 0, 0, 0.2);
-    padding: 4px 8px;
-    border-radius: 6px;
-}
-
-.upgrade-count {
-    position: absolute;
-    top: -5px;
-    right: -5px;
-    background: var(--primary);
-    padding: 2px 8px;
     border-radius: 10px;
-    font-size: 0.8rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.stat-line span {
+    color: var(--gold);
     font-weight: bold;
 }
 
-/* États Boutique */
-.shop-item.affordable:hover {
-    transform: scale(1.02);
-    background: rgba(108, 92, 231, 0.2);
-    border-color: var(--primary);
-}
-
-.shop-item.locked {
-    opacity: 0.4;
-    filter: grayscale(1);
-    cursor: not-allowed;
-}
-
-/* --- CENTER AREA (CLICKER) --- */
 .main-clicker {
-    display: flex;
-    flex-direction: column;
     justify-content: center;
-    /* Centre verticalement */
     align-items: center;
-    /* Centre horizontalement */
-    height: 100%;
-    text-align: center;
-}
-
-.main-clicker {
     position: relative;
+    text-align: center;
 }
 
 #lp-count {
@@ -165,8 +76,9 @@ body {
 }
 
 .currency-name {
-    margin-top: -10px;
-    letter-spacing: 5px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-size: 0.9rem;
     opacity: 0.7;
 }
 
@@ -175,99 +87,212 @@ body {
     border: none;
     cursor: pointer;
     font-size: 180px;
-    /* Plus gros ! */
-    transition: transform 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.1));
+    transition: transform 0.1s;
+    animation: float 4s ease-in-out infinite;
+    z-index: 10;
 }
 
-#laurien-btn:hover {
-    transform: scale(1.05);
-}
-
-#laurien-btn:active {
-    transform: scale(0.9);
-}
-
-/* --- DIALOGUES --- */
+/* --- DIALOGUES (FIXE PC & MOBILE) --- */
 #dialogue-box {
     position: absolute;
     top: 40px;
-    width: 100%;
-    max-width: 600px;
-    margin: 0 auto;
-}
-
-#laurien-talks {
-    font-size: 1.1rem;
-    line-height: 1.5;
-}
-
-/* Overlay & Focus */
-.dialogue-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.8);
-    z-index: 50;
-    display: none;
+    left: 50%;
+    transform: translateX(-50%) translateY(-20px);
+    width: 90%;
+    max-width: 500px;
+    z-index: 100;
+    pointer-events: none;
+    opacity: 0;
+    transition: all 0.4s ease;
 }
 
 .is-talking #dialogue-box {
-    position: relative;
-    z-index: 60;
-    border: 3px solid var(--gold);
-    transform: translateY(20px) scale(1.05);
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+    pointer-events: auto;
 }
 
-.is-talking .laurien-container,
-.is-talking .sidebar {
-    filter: blur(8px);
-    pointer-events: none;
+.dialogue-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: none;
+    z-index: 90;
+}
+
+/* --- SHOP --- */
+#shop-container {
+    flex-grow: 1;
+    overflow-y: auto;
+    margin-top: 15px;
+}
+
+.shop-item {
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 15px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    cursor: pointer;
+}
+
+.shop-item.affordable {
+    border-color: var(--primary);
+    background: rgba(108, 92, 231, 0.1);
+}
+
+.shop-item.locked {
+    opacity: 0.4;
+    filter: grayscale(1);
+    cursor: not-allowed;
+}
+
+.upgrade-sprite {
+    font-size: 2rem;
+}
+
+.shop-info {
+    flex-grow: 1;
+    text-align: left;
+}
+
+.upgrade-count {
+    font-weight: 900;
+    color: var(--primary);
 }
 
 /* --- INTRO SCREEN --- */
 #intro-screen {
     position: fixed;
     inset: 0;
-    background: radial-gradient(circle, #302b63, #0f0c29);
     z-index: 1000;
+    background: #0f0c29;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 .intro-content {
-    width: 400px;
+    max-width: 400px;
     text-align: center;
-}
-
-input,
-select {
-    width: 100%;
-    background: rgba(255, 255, 255, 0.05);
-    border: 2px solid var(--primary);
-    border-radius: 12px;
-    padding: 12px;
-    color: white;
-    margin-top: 10px;
-    outline: none;
 }
 
 #start-btn {
     width: 100%;
-    margin-top: 20px;
-    background: var(--primary);
-    color: white;
-    border: none;
     padding: 15px;
+    background: var(--primary);
+    border: none;
     border-radius: 12px;
+    color: white;
     font-weight: bold;
     cursor: pointer;
 }
 
-/* Animations */
+/* --- RESPONSIVE MOBILE (< 850px) --- */
+.mobile-header,
+.mobile-nav {
+    display: none;
+}
+
+@media (max-width: 850px) {
+    .game-wrapper {
+        display: block;
+        padding-top: 80px;
+        padding-bottom: 90px;
+    }
+
+    .sidebar,
+    .main-clicker {
+        display: none !important;
+    }
+
+    .mobile-active {
+        display: flex !important;
+    }
+
+    .mobile-header {
+        display: flex;
+        position: fixed;
+        top: 0;
+        width: 100%;
+        height: 60px;
+        background: var(--bg);
+        border-bottom: 1px solid var(--primary);
+        justify-content: center;
+        align-items: center;
+        z-index: 95;
+    }
+
+    .mobile-nav {
+        display: flex;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        height: 70px;
+        background: rgba(15, 12, 41, 0.95);
+        border-top: 2px solid var(--primary);
+        z-index: 100;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    .mobile-nav button {
+        flex: 1;
+        height: 100%;
+        background: none;
+        border: none;
+        color: white;
+        font-weight: bold;
+        opacity: 0.5;
+        cursor: pointer;
+    }
+
+    .mobile-nav button.active {
+        opacity: 1;
+        color: var(--gold);
+    }
+
+    #dialogue-box {
+        top: 80px;
+    }
+
+    #laurien-btn {
+        font-size: 130px;
+    }
+}
+
+/* --- UTILITAIRES --- */
+.save-button {
+    border: 2px solid #2ecc71;
+    color: #2ecc71;
+    background: none;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 10px;
+    width: 100%;
+    margin-top: 15px;
+}
+
+.reset-button {
+    border: 2px solid #e74c3c;
+    color: #e74c3c;
+    background: none;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 10px;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.5s;
+}
+
 @keyframes float {
 
     0%,
@@ -280,183 +305,46 @@ select {
     }
 }
 
-.laurien-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 250px;
-    /* Fixe une zone pour éviter les sauts lors de l'animation */
-}
-
-.hidden {
-    opacity: 0;
-    pointer-events: none;
-    transition: 0.5s;
-}
-
-/* Ajout pour le bouton Sauvegarder dans la sidebar gauche */
-.save-button {
-    margin-top: auto;
-    /* Le pousse vers le bas de la carte */
-    background: rgba(46, 204, 113, 0.15);
-    border: 2px solid #2ecc71;
-    color: #2ecc71;
-    padding: 12px;
-    border-radius: 12px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.2s;
-    font-family: 'Poppins', sans-serif;
-}
-
-.save-button:hover {
-    background: #2ecc71;
-    color: white;
-    box-shadow: 0 0 15px rgba(46, 204, 113, 0.4);
-}
-
-#score-container {
-    margin-bottom: 20px;
-}
-
-/* On s'assure que Laurien flotte toujours */
-.laurien-container button {
-    animation: float 4s ease-in-out infinite;
-}
-
-/* Style du Select modernisé */
+/* --- STYLE DES INPUTS & SELECTS (INTRO) --- */
+input[type="text"],
 select {
     width: 100%;
-    background: rgba(255, 255, 255, 0.05);
-    color: white;
-    border: 2px solid var(--primary);
+    padding: 12px 15px;
+    margin-top: 8px;
+    margin-bottom: 20px;
+    background: rgba(255, 255, 255, 0.08);
+    /* Fond translucide */
+    border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 12px;
-    padding: 12px;
-    margin-top: 10px;
+    color: white;
     font-family: 'Poppins', sans-serif;
-    cursor: pointer;
+    font-size: 1rem;
     outline: none;
-    appearance: none;
-    /* Enlève la flèche par défaut du navigateur */
-
-    /* Ajout d'une flèche personnalisée en SVG */
-    background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white' width='18px' height='18px'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 15px center;
     transition: all 0.3s ease;
+    appearance: none;
+    /* Supprime le style par défaut du navigateur */
 }
 
+/* Effet au survol/focus */
+input[type="text"]:focus,
 select:focus {
-    background-color: rgba(108, 92, 231, 0.1);
-    border-color: var(--gold);
-    box-shadow: 0 0 10px rgba(108, 92, 231, 0.3);
+    background: rgba(255, 255, 255, 0.15);
+    border-color: var(--primary);
+    box-shadow: 0 0 15px rgba(108, 92, 231, 0.3);
 }
 
-/* Style des options (le menu qui s'ouvre) */
+/* Style spécifique pour les options du select (fond sombre pour lisibilité) */
 select option {
-    background-color: #1a163f;
-    /* Fond sombre pour coller au thème */
+    background: #1a1a2e;
     color: white;
-    padding: 10px;
 }
 
-/* Petit ajustement pour le label au-dessus du select */
+/* Style des labels pour qu'ils soient plus pro */
 .input-group label {
-    font-size: 0.9rem;
-    font-weight: bold;
-    color: var(--primary);
-    margin-bottom: 5px;
     display: block;
-}
-
-.reset-button {
-    margin-top: 10px;
-    background: rgba(231, 76, 60, 0.15);
-    border: 2px solid #e74c3c;
-    color: #e74c3c;
-    padding: 10px;
-    border-radius: 12px;
-    font-weight: bold;
-    cursor: pointer;
-    width: 100%;
-    transition: 0.2s;
-}
-
-.reset-button:hover {
-    background: #e74c3c;
-    color: white;
-}
-
-@media (max-width: 850px) {
-    .game-wrapper {
-        display: block;
-        /* On casse la grille */
-        position: relative;
-        height: 100vh;
-        padding: 10px;
-    }
-
-    /* On cache les sidebars par défaut sur mobile */
-    .sidebar,
-    .main-clicker {
-        display: none;
-        height: calc(100vh - 80px);
-        /* Laisse de la place pour la nav */
-        width: 100%;
-    }
-
-    /* La classe qui affiche l'onglet actif */
-    .mobile-active {
-        display: flex !important;
-        flex-direction: column;
-    }
-
-    .mobile-nav {
-        display: flex;
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 70px;
-        background: rgba(15, 12, 41, 0.95);
-        backdrop-filter: blur(10px);
-        border-top: 2px solid var(--primary);
-        z-index: 100;
-    }
-
-    .mobile-nav button {
-        flex: 1;
-        background: none;
-        border: none;
-        color: white;
-        font-family: 'Poppins', sans-serif;
-        font-weight: bold;
-        opacity: 0.6;
-    }
-
-    .mobile-nav button.active {
-        opacity: 1;
-        color: var(--gold);
-        border-bottom: 3px solid var(--gold);
-    }
-
-    /* Ajustements de taille pour que ça rentre */
-    #lp-count {
-        font-size: 3rem;
-    }
-
-    #laurien-btn {
-        font-size: 100px;
-    }
-
-    .glass-card {
-        height: 100%;
-    }
-}
-
-/* Cache la nav sur PC */
-@media (min-width: 851px) {
-    .mobile-nav {
-        display: none;
-    }
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.8;
+    margin-left: 5px;
 }

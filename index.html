@@ -3,18 +3,19 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Laurien Simulator</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&display=swap" rel="stylesheet">
 </head>
-<nav class="mobile-nav">
-    <button onclick="UI.switchTab('left')">📊 Stats</button>
-    <button onclick="UI.switchTab('main')" class="active">👤 Jeu</button>
-    <button onclick="UI.switchTab('right')">🛒 Shop</button>
-</nav>
 
 <body>
+    <header class="mobile-header">
+        <div class="header-score">
+            <span id="lp-count-mobile">0</span> <small>LP</small>
+        </div>
+    </header>
+
     <div id="dialogue-overlay" class="dialogue-overlay"></div>
 
     <div id="intro-screen">
@@ -24,6 +25,7 @@
             <div class="input-group">
                 <label for="player-name-input">Entre ton pseudo ici</label>
                 <input type="text" id="player-name-input" placeholder="Pseudo..." maxlength="15">
+
                 <label style="margin-top: 15px; display: block;">Ton identité :</label>
                 <select id="player-gender">
                     <option value="Garçon">Garçon</option>
@@ -41,25 +43,28 @@
         <aside class="sidebar left">
             <div class="glass-card">
                 <h3>Stats</h3>
-                <p>LP : <span id="lp-count">0</span></p>
-                <p>Total : <span id="lp-total">0</span></p>
-                <p>Prod/sec: <span id="lp-ps">0</span></p>
+                <div class="stat-line">LP : <span id="lp-count">0</span></div>
+                <div class="stat-line">Total : <span id="lp-total">0</span></div>
+                <div class="stat-line">Prod/sec: <span id="lp-ps">0</span></div>
 
-                <button id="save-btn" class="save-button">💾 Sauvegarder</button>
-                <button id="reset-btn" class="reset-button">🗑️ Reset la partie</button>
+                <div class="admin-buttons">
+                    <button id="save-btn" class="save-button">💾 Sauvegarder</button>
+                    <button id="reset-btn" class="reset-button">🗑️ Reset la partie</button>
+                </div>
             </div>
         </aside>
 
-
         <main class="main-clicker">
-            <div id="dialogue-box" class="glass-card">
-                <span id="laurien-talks">...</span>
-            </div>
             <div id="score-container">
                 <p class="currency-name">Laurien Points</p>
             </div>
+
             <div class="laurien-container">
                 <button id="laurien-btn">👤</button>
+            </div>
+
+            <div id="dialogue-box" class="glass-card">
+                <span id="laurien-talks">...</span>
             </div>
         </main>
 
@@ -72,6 +77,12 @@
             </div>
         </aside>
     </div>
+
+    <nav class="mobile-nav">
+        <button id="nav-stats">📊 Stats</button>
+        <button id="nav-game" class="active">👤 Jeu</button>
+        <button id="nav-shop">🛒 Shop</button>
+    </nav>
 
     <script type="module" src="main.js"></script>
 </body>

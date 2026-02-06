@@ -5,10 +5,7 @@ let lastThreshold = -1;
 let eventTriggered = false;
 
 function init() {
-    // 1. On active les clics pour les dialogues IMMÉDIATEMENT
-    if (window.innerWidth <= 850) {
-        UI.switchTab('main');
-    }
+    // 1. Initialisation UI (Ordre important : Listeners d'abord)
     UI.initGlobalListeners();
 
     const saved = localStorage.getItem('laurien_save');
@@ -24,23 +21,26 @@ function init() {
             updateAll();
         });
     }
-    // 2. LISTENERS
+
+    // 2. LISTENERS DU BOUTON PRINCIPAL
     const laurienBtn = document.getElementById('laurien-btn');
     laurienBtn.addEventListener('click', () => {
         gameData.lp += 1;
         gameData.totalLp += 1;
+
+        // Petit effet visuel au clic
         laurienBtn.style.transform = 'scale(0.9) rotate(5deg)';
         setTimeout(() => laurienBtn.style.transform = 'scale(1) rotate(0deg)', 50);
+
         checkEvents();
         updateAll();
     });
 
     document.getElementById('save-btn').addEventListener('click', saveGame);
-
     const resetBtn = document.getElementById('reset-btn');
     if (resetBtn) resetBtn.addEventListener('click', deleteProgress);
 
-    // 3. BOUCLE DE PROD
+    // 3. BOUCLE DE PRODUCTION (1 seconde)
     setInterval(() => {
         let totalProd = 0;
         gameData.upgrades.forEach(upg => totalProd += upg.count * upg.baseProduction);
@@ -51,12 +51,14 @@ function init() {
             checkEvents();
             updateAll();
         }
+
         const psDisplay = document.getElementById('lp-ps');
         if (psDisplay) psDisplay.innerText = totalProd.toFixed(1);
     }, 1000);
 }
 
 function checkEvents() {
+    // Événement spécial des 200 LP
     if (gameData.totalLp >= 200 && !eventTriggered) {
         eventTriggered = true;
         gameData.lp += 6000;
@@ -77,6 +79,7 @@ function saveGame() {
         playerName: gameData.playerName,
         playerGender: gameData.playerGender,
         eventTriggered: eventTriggered,
+        lastThreshold: lastThreshold, // On sauve le palier pour éviter de répéter les dialogues
         upgrades: gameData.upgrades.map(u => ({ id: u.id, count: u.count, cost: u.baseCost }))
     };
     localStorage.setItem('laurien_save', JSON.stringify(saveData));
@@ -92,9 +95,14 @@ function loadGame() {
         gameData.playerName = data.playerName;
         gameData.playerGender = data.playerGender;
         eventTriggered = data.eventTriggered || false;
+        lastThreshold = data.lastThreshold || -1; // On restaure le dernier palier vu
+
         data.upgrades.forEach(savedUpg => {
             const upg = gameData.upgrades.find(u => u.id === savedUpg.id);
-            if (upg) { upg.count = savedUpg.count; upg.baseCost = savedUpg.cost; }
+            if (upg) {
+                upg.count = savedUpg.count;
+                upg.baseCost = savedUpg.cost;
+            }
         });
     }
 }

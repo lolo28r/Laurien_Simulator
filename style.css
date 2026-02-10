@@ -18,6 +18,8 @@ body {
     color: var(--text);
     height: 100vh;
     overflow: hidden;
+    touch-action: pan-y;
+    /* Autorise le scroll vertical mais bloque le zoom pincé */
 }
 
 /* --- STRUCTURE PC --- */
@@ -86,10 +88,30 @@ body {
     background: none;
     border: none;
     cursor: pointer;
-    font-size: 180px;
-    transition: transform 0.1s;
-    animation: float 4s ease-in-out infinite;
-    z-index: 10;
+    outline: none;
+    padding: 0;
+    transition: transform 0.1s ease;
+    touch-action: manipulation;
+    /* Désactive le zoom au double-tap */
+    user-select: none;
+    /* Empêche de sélectionner l'image */
+    -webkit-tap-highlight-color: transparent;
+    /* Enlève le carré bleu sur mobile */
+
+}
+
+#laurien-img {
+    width: 250px;
+    /* Ajuste la taille selon tes envies */
+    height: auto;
+    display: block;
+    /* Optionnel : ajoute un petit contour blanc pour que ça ressorte */
+    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
+}
+
+/* L'effet quand on clique */
+#laurien-btn:active {
+    transform: scale(0.95);
 }
 
 /* --- DIALOGUES (FIXE PC & MOBILE) --- */
@@ -347,4 +369,215 @@ select option {
     letter-spacing: 1px;
     opacity: 0.8;
     margin-left: 5px;
+}
+
+/* --- COMBAT POKÉMON LIAM --- */
+#liam-event-screen {
+    position: fixed;
+    inset: 0;
+    background: #000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    /* Toujours au-dessus de tout */
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+    overflow: hidden;
+}
+
+#liam-event-screen.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+#liam-encounter-bg {
+    position: absolute;
+    inset: 0;
+    background: url('forêt.png') no-repeat center center;
+    background-size: cover;
+    opacity: 0;
+    transition: opacity 1.5s ease;
+    z-index: 1;
+}
+
+#liam-encounter-bg.visible {
+    opacity: 0.6;
+    /* Un peu sombre pour faire ressortir l'UI */
+}
+
+/* L'interface des barres de vie */
+.battle-ui {
+    position: absolute;
+    inset: 0;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.hp-bar {
+    position: absolute;
+    background: #fff;
+    border: 4px solid #333;
+    padding: 10px;
+    width: 220px;
+    border-radius: 0 15px 0 15px;
+    /* Style Pokémon Retro */
+    color: #333;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+}
+
+.hp-bar.enemy {
+    top: 40px;
+    right: 20px;
+}
+
+.hp-bar.player {
+    bottom: 220px;
+    left: 20px;
+}
+
+/* Ajusté pour pas gêner le menu mobile */
+
+.bar-bg {
+    background: #e0e0e0;
+    height: 12px;
+    border: 2px solid #333;
+    margin-top: 5px;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.bar-fill {
+    background: #4caf50;
+    height: 100%;
+    width: 100%;
+    transition: width 0.5s ease;
+}
+
+/* Le Sprite de Liam */
+#liam-sprite {
+    position: relative;
+    z-index: 5;
+    transform: translateY(20px);
+    transition: transform 0.3s;
+}
+
+#liam-sprite img {
+    width: 280px;
+    /* Taille du sprite */
+    height: auto;
+    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.5));
+    animation: pokemonFloat 2s infinite alternate ease-in-out;
+}
+
+@keyframes pokemonFloat {
+    from {
+        transform: translateY(0);
+    }
+
+    to {
+        transform: translateY(-20px);
+    }
+}
+
+/* Dialogue de combat */
+.liam-dialogue {
+    position: absolute;
+    bottom: 110px;
+    /* Juste au dessus du menu */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    background: rgba(255, 255, 255, 0.95);
+    border: 4px solid #333;
+    padding: 15px;
+    color: #222;
+    z-index: 20;
+    font-family: 'Courier New', monospace;
+    min-height: 80px;
+}
+
+/* Menu des boutons */
+.battle-menu {
+    position: absolute;
+    bottom: 20px;
+    width: 95%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    z-index: 30;
+}
+
+.battle-menu button {
+    padding: 15px 5px;
+    font-size: 0.9rem;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 900;
+    text-transform: uppercase;
+    border: 4px solid #333;
+    background: #fff;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.battle-menu button:hover {
+    background: #f1c40f;
+}
+
+.battle-menu button:active {
+    transform: scale(0.95);
+}
+
+.hit-flash {
+    animation: flashRed 0.2s 2;
+}
+
+@keyframes flashRed {
+    0% {
+        background: rgba(255, 0, 0, 0);
+    }
+
+    50% {
+        background: rgba(255, 0, 0, 0.5);
+    }
+
+    100% {
+        background: rgba(255, 0, 0, 0);
+    }
+}
+
+/* Bouton pour afficher les attaques */
+.action-toggle-btn {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 40;
+    padding: 15px 40px;
+    background: var(--gold);
+    border: 4px solid #333;
+    font-weight: 900;
+    font-size: 1.2rem;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* On ajuste le menu pour qu'il recouvre le bouton AGIR quand il est actif */
+.battle-menu {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 95%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    z-index: 50;
+    background: rgba(0, 0, 0, 0.8);
+    /* Fond sombre pour bien détacher les boutons */
+    padding: 10px;
+    border-radius: 10px;
 }

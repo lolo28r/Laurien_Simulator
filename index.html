@@ -58,9 +58,10 @@
             <div id="score-container">
                 <p class="currency-name">Laurien Points</p>
             </div>
-
             <div class="laurien-container">
-                <button id="laurien-btn">👤</button>
+                <button id="laurien-btn">
+                    <img src="laurien.png" alt="Laurien" id="laurien-img">
+                </button>
             </div>
 
             <div id="dialogue-box" class="glass-card">
@@ -85,6 +86,39 @@
     </nav>
 
     <script type="module" src="main.js"></script>
+    <div id="liam-event-screen">
+        <div id="liam-encounter-bg"></div>
+
+        <div class="battle-ui">
+            <div class="hp-bar enemy">
+                <span class="name">LIAM SAUVAGE</span>
+                <div class="bar-bg">
+                    <div id="liam-hp" class="bar-fill" style="width: 100%;"></div>
+                </div>
+            </div>
+
+            <div class="hp-bar player">
+                <span class="name">LAURIEN</span>
+                <div class="bar-bg">
+                    <div id="laurien-hp" class="bar-fill" style="width: 100%;"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="liam-dialogue" id="liam-event-dialogue">...</div>
+
+        <div id="liam-sprite">
+            <img src="liam.png" alt="Liam">
+        </div>
+        <button id="show-actions-btn" class="action-toggle-btn">AGIR</button>
+        <div id="battle-menu" class="battle-menu" style="display: none;">
+            <button onclick="window.battleAction('attack')">TACLES D'ÉPAULE</button>
+            <button onclick="window.battleAction('kick')">COUP DE SAVATE</button>
+            <button onclick="window.battleAction('protect')">PROTÉGER LA BINOUZE</button>
+            <button id="pity-btn" onclick="window.battleAction('pity')"
+                style="display: none; background: #ffeb3b;">AVOIR PITIÉ...</button>
+        </div>
+    </div>
 </body>
 
 </html>

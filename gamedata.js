@@ -3,15 +3,16 @@ export const gameData = {
     totalLp: 0,
     playerName: "Anonyme",
     playerGender: "Garçon",
-
+    clickModifier: 1,
+    liamCaptured: false,
     story: [
         {
             threshold: 0,
             text: (n, g) => [
                 `Bienvenue dans le simulateur de Laurien, ${n}.`,
-                `${g} !!  On baise ?`,
-                `Dans ce jeu tu va devoir gagner des Laurien Points en achetant des améliorations et en cliquant !! Mais go faire ca en fait !`,
-                `Va-y ${n}, clique sur la silhouette pour faire des Laurien Points.`,
+                `${g} !! On baise ?`,
+                `Dans ce jeu tu vas devoir gagner des Laurien Points en achetant des améliorations et en cliquant !!`,
+                `Vas-y ${n}, clique sur la silhouette pour faire des Laurien Points.`,
             ]
         },
         {
@@ -26,43 +27,38 @@ export const gameData = {
             threshold: 20,
             text: (n) => [
                 `Bonne nouvelle, tu viens de débloquer les "Sondages Rémunérés".`,
-                `J'en ai fait plein durant ma jeunesse, tu va voir c'est très formateur, et ça te rapporte 0.2 Laurien Points par secondes.`,
-                `Tu peux acheter l'amélioration dans le Shop.`,
-                `Allez plus que 6 000 avant la binouze !!.`
+                `Tu peux acheter des business dans la boutique pour générer des revenus passifs.`,
+                `Allez, plus que 6 000 Laurien Points AVANT la binouze !!`
             ]
         },
-        // NOUVEAUX DIALOGUES POUR NE PAS ABANDONNER
         {
             threshold: 100,
             text: (n) => [
-                `T'es encore là ?.`,
+                `T'es encore là ?`,
                 `Merci de jouer à mon jeu, c'est vraiment cool.`,
-                `Bah continue hein.`,
-                `Tu peux aussi améliorer tes Business dans le Shop pour faire plus de Laurien Points par secondes.`
-            ]
-        },
-        {
-            threshold: 150,
-            text: (n) => [
-                `T'a vu c'est rentable les sondages.`,
-
+                `Tu peux aussi améliorer tes Business dans le Shop.`
             ]
         },
         {
             threshold: 200,
             text: (n) => [
-                `Allez régale toi`
+                `Allez régale-toi, un petit bonus arrive !`
             ]
         },
-
+        {
+            threshold: 10000,
+            text: (n) => [
+                `Wow 10 000 Laurien Points !! Impressionnant.`,
+                `J'ai entendu dire qu'un voyage t'attend à un certain seuil de points...`
+            ]
+        },
     ],
-
     upgrades: [
         {
             id: 'sondages',
             name: 'Sondages Rémunérés',
             sprite: '📝',
-            desc: 'Eh plutôt tentant non ?',
+            desc: 'Plutôt tentant non ?',
             baseCost: 20,
             baseProduction: 0.2,
             count: 0
@@ -71,9 +67,9 @@ export const gameData = {
             id: 'binouze',
             name: 'Binouze',
             sprite: '🍺',
-            desc: 'Une petite bière pour la motivation. Ça produit enfin.',
+            desc: 'Une petite bière pour la motivation. Ça bombarde !',
             baseCost: 6000,
-            baseProduction: 45, // BOOST : On passe de 5 à 45 pour que ça bombarde direct !
+            baseProduction: 45,
             count: 0
         }
     ]
